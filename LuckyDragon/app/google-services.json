@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "640809946640",
+    "project_id": "lucky-dragons-b7b1c",
+    "storage_bucket": "lucky-dragons-b7b1c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640809946640:android:fc09c10af2b59f0c8a8495",
+        "android_client_info": {
+          "package_name": "com.example.luckydragon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOwsCqoGCW8SO4gi_m6BRREPDmue2KdIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

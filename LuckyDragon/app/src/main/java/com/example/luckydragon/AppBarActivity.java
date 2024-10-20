@@ -9,6 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public abstract class AppBarActivity extends AppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {

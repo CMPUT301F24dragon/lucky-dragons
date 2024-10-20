@@ -27,17 +27,20 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/nameTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="40sp"
                         android:textStyle="bold"
                         android:text="FName LName"/>
                     <TextView
+                        android:id="@+id/emailTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="25sp"
                         android:text="email@school.ca"/>
                     <TextView
+                        android:id="@+id/phoneNumberTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="25sp"
@@ -52,55 +55,10 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/baseline_edit_24"/>
             </LinearLayout>
-            <LinearLayout
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragment_container_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Accepted:"
-                    android:textStyle="bold"
-                    android:textSize="25sp"/>
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Waitlisted:"
-                    android:textStyle="bold"
-                    android:textSize="25sp"/>
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Attended:"
-                    android:textStyle="bold"
-                    android:textSize="25sp"/>
-                <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            </LinearLayout>
+                android:layout_height="match_parent" />
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>
