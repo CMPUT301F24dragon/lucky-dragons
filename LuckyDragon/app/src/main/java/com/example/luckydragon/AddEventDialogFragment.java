@@ -68,13 +68,17 @@ public class AddEventDialogFragment extends DialogFragment {
                             return;
                         }
 
-                        // create event
-                        Event event = new Event(eventName, organizerName, facilityName, waitlistLimitStr.isEmpty() ? null : Integer.parseInt(waitlistLimitStr),
-                                Integer.parseInt(attendeeLimitStr), date, timeHours, timeMinutes);
+
 
                         // add event to database if one with the same info does not already exist
-                        String eventHashCode = String.format("%s", event.hashCode());
-                        DocumentReference eventRef = db.collection("events").document(eventHashCode);
+
+                        DocumentReference eventRef = db.collection("events").document();
+
+                        // create event
+                        Event event = new Event(eventRef.getId(), eventName, organizerName, facilityName, waitlistLimitStr.isEmpty() ? null : Integer.parseInt(waitlistLimitStr),
+                                Integer.parseInt(attendeeLimitStr), date, timeHours, timeMinutes);
+
+                        // Add event to database
                         eventRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
