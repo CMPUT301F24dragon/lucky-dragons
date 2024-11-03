@@ -39,6 +39,11 @@ android {
             resources.excludes.add("META-INF/*")
         }
     }
+
+    tasks.withType<Test>{
+        useJUnitPlatform()
+    }
+
 }
 
 dependencies {
@@ -61,4 +66,7 @@ dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.2")
     // for QR Code Scanner
     implementation("com.journeyapps:zxing-android-embedded:4.1.0")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.0.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.0.1")
 }

@@ -74,6 +74,9 @@ public class Event {
     private String[] waitlist = {};
     List<String> waitList = new ArrayList<String>(Arrays.asList(waitlist));
 
+    private List<String> inviteeList;
+    private List<String> attendeeList;
+
     /**
      * Creates an Event object.
      * @param id the event id
@@ -86,6 +89,7 @@ public class Event {
      * @param date: the date of the event, as a string YY-MM-DD
      * @param timeHours: the hour time e.g. "8" for 8:30
      * @param timeMinutes: the minute time e.g. "30" for 8:30
+     * @param waitList the waitlist for this event
      */
     public Event(String id, String name, String organizerDeviceID, String organizerName, String facility, @Nullable Integer waitlistLimit, Integer attendeeLimit, String date, Integer timeHours, Integer timeMinutes, List<String> waitList)  {
         this.id = id;
@@ -98,6 +102,7 @@ public class Event {
         this.date = date;
         this.time = new Time(timeHours, timeMinutes);
         this.qrHash = generateQRCode();
+        this.waitList = waitList;
     }
 
     /**
@@ -124,7 +129,6 @@ public class Event {
         this.time = new Time(timeHours, timeMinutes);
         this.qrHash = generateQRCode();
         this.qrCode = createBitMap(this.qrHash);
-        this.waitList = waitList;
     }
 
     /**
@@ -152,6 +156,20 @@ public class Event {
      */
     public void removeFromWaitList(String deviceID) {
         waitList.remove(deviceID);
+    }
+
+    /**
+     * Returns a random entrant's deviceID from the waitlist.
+     * In the case that there is no one in the waitlist, returns null.
+     * @return the deviceID of the randomly chosen entrant, or null if list is empty
+     */
+    public String drawEntrantFromWaitingList() {
+        if (waitList.isEmpty()) {
+            return null;
+        }
+        int randomIndex = (int) (Math.random() * waitList.size());
+
+        return waitList.get(randomIndex);
     }
 
     /**
