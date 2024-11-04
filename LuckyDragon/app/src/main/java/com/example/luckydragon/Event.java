@@ -7,19 +7,15 @@ package com.example.luckydragon;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.firebase.firestore.DocumentReference;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -71,8 +67,7 @@ public class Event {
     private BitMatrix qrHash;
     private Bitmap qrCode;
 
-    private String[] waitlist = {};
-    List<String> waitList = new ArrayList<String>(Arrays.asList(waitlist));
+    List<String> waitList;
 
     private List<String> inviteeList;
     private List<String> attendeeList;
@@ -147,7 +142,9 @@ public class Event {
         eventData.put("Hours", time.hours);
         eventData.put("Minutes", time.minutes);
         eventData.put("HashedQR", qrHash.toString("1", "0"));
-        eventData.put("Waitlist", waitList);
+        eventData.put("WaitList", waitList);
+        eventData.put("InviteeList", inviteeList);
+        eventData.put("AttendeeList", attendeeList);
         return eventData;
     }
 
@@ -163,13 +160,25 @@ public class Event {
      * In the case that there is no one in the waitlist, returns null.
      * @return the deviceID of the randomly chosen entrant, or null if list is empty
      */
-    public String drawEntrantFromWaitingList() {
+    public String drawEntrantFromWaitList() {
         if (waitList.isEmpty()) {
             return null;
         }
         int randomIndex = (int) (Math.random() * waitList.size());
 
         return waitList.get(randomIndex);
+    }
+
+    /**
+     * Samples entrants from the waitlist and moves them to the invitee list.
+     * TODO: This should also notify the invited entrants.
+     */
+    public void sampleEntrantsFromWaitList() {
+        while (attendeeList.size() + inviteeList.size() < attendeeLimit && !waitList.isEmpty()) {
+            String sampledEntrant = drawEntrantFromWaitList();
+            inviteeList.add(sampledEntrant);
+            removeFromWaitList(sampledEntrant);
+        }
     }
 
     /**

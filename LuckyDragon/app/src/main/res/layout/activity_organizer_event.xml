@@ -95,9 +95,21 @@
                     android:text="Capacity: x"/>
             </LinearLayout>
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <ListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            </ScrollView>
+
+            <Button
+                android:id="@+id/sampleAttendeeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sample Attendees"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"/>
         </LinearLayout>
     </LinearLayout>
 
