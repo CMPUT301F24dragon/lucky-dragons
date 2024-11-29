@@ -19,7 +19,9 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.luckydragon.GlobalApp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -134,15 +136,19 @@ public class User extends Observable {
     /**
      * Deletes the current user from the database. If the user is an organizer,
      * it also deletes all events organized by the user.
-     * Also deletes the associated message document that stores notifications
+     * Also deletes the associated message document that stores notifications.
+     * Also removes the user from any events they were in.
      */
     public void deleteUser() {
+        // Delete user document
         db.collection("users")
                 .document(getDeviceId())
                 .delete();
+        // Delete messages document
         db.collection("messages")
                 .document(getDeviceId())
                 .delete();
+        // Delete events if user is organizer
         if (isOrganizer()) {
             db.collection("events")
                     .whereEqualTo("organizerDeviceId", getDeviceId())
@@ -153,6 +159,17 @@ public class User extends Observable {
                         }
                     });
         }
+        // Remove user from events' arrays
+        db.collection("events")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (DocumentSnapshot document: queryDocumentSnapshots) {
+                        document.getReference().update("waitList", FieldValue.arrayRemove(deviceId));
+                        document.getReference().update("inviteeList", FieldValue.arrayRemove(deviceId));
+                        document.getReference().update("attendeeList", FieldValue.arrayRemove(deviceId));
+                        document.getReference().update("cancelledList", FieldValue.arrayRemove(deviceId));
+                    }
+                });
     }
 
     /**
